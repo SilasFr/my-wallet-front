@@ -1,16 +1,21 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { UserContext } from "../Contexts/UserContext";
 import Login from "./Login";
 import Main from "./Main";
 import Signup from "./Signup";
 
 export default function App() {
+  const { currentUser, setCurrentUser } = useState();
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/main" element={<Main />} />
-      </Routes>
-    </BrowserRouter>
+    <UserContext.Provider value={(currentUser, setCurrentUser)}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/main" element={<Main />} />
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }

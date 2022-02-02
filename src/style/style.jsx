@@ -12,10 +12,11 @@ const Container = styled.div`
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: #8c11be;
   display: flex;
-  gap: 13px;
+
+  gap: 9%;
   flex-direction: column;
   align-items: center;
   .header {

@@ -1,7 +1,18 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../Contexts/UserContext";
 import { Container, Footnote, Forms } from "../style/style";
 
 export default function Login() {
+  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+    console.log(e);
+  }
+
   return (
     <Container>
       <div className="logo">
@@ -19,9 +30,21 @@ export default function Login() {
         </svg>
       </div>
 
-      <Forms action="">
-        <input type="email" name="" placeholder="email" />
-        <input type="password" name="" placeholder="senha" />
+      <Forms onSubmit={handleLogin}>
+        <input
+          type="email"
+          name=""
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          name=""
+          placeholder="senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit">
           <p>Entrar</p>
         </button>

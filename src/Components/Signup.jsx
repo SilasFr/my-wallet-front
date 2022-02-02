@@ -1,7 +1,12 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Footnote, Forms } from "../style/style";
 
 export default function Signup() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pwConfirmation, setPwConfirmation] = useState("");
   return (
     <Container>
       <div className="logo">
@@ -20,10 +25,46 @@ export default function Signup() {
       </div>
 
       <Forms action="">
-        <input type="text" name="" placeholder="Nome" />
-        <input type="email" name="" placeholder="Email" />
-        <input type="password" name="" placeholder="Senha" />
-        <input type="password" name="" placeholder="Confirme a senha" />
+        <input
+          type="text"
+          name=""
+          placeholder="Nome"
+          required
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <input
+          type="email"
+          name=""
+          placeholder="Email"
+          required
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          name=""
+          placeholder="Senha"
+          required
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        <input
+          type="password"
+          name=""
+          placeholder="Confirme a senha"
+          required
+          value={pwConfirmation}
+          onChange={(e) => {
+            setPwConfirmation(e.target.value);
+          }}
+        />
         <button type="submit">
           <p>Cadastrar</p>
         </button>
