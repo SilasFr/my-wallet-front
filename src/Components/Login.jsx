@@ -1,16 +1,30 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { UserContext } from "../Contexts/UserContext";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import UserContext from "../Contexts/UserContext";
 import { Container, Footnote, Forms } from "../style/style";
 
 export default function Login() {
-  // const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
-    console.log(e);
+    console.log(currentUser, setCurrentUser);
+
+    const promise = axios.post("http://localhost:5000/sign-in", {
+      email,
+      password,
+    });
+    promise.then((response) => {
+      console.log(response.data);
+      setCurrentUser(response.data);
+    });
+    promise.catch((error) => {
+      console.log(error.response);
+    });
   }
 
   return (

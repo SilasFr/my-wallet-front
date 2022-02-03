@@ -1,5 +1,6 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container, Footnote, Forms } from "../style/style";
 
 export default function Signup() {
@@ -7,6 +8,31 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pwConfirmation, setPwConfirmation] = useState("");
+  const navigate = useNavigate();
+
+  function handleSignUp(e) {
+    e.preventDefault();
+    if (pwConfirmation !== password) {
+      alert("As senhas não são compatíveis!");
+      setPassword("");
+      setPwConfirmation("");
+      return;
+    }
+
+    const promise = axios.post("http://localhost:5000/sign-up", {
+      name,
+      email,
+      password,
+    });
+    promise.then((response) => {
+      console.log(response.data);
+      alert(response.data);
+      navigate("/");
+    });
+    promise.catch((error) => {
+      console.log(error.response);
+    });
+  }
   return (
     <Container>
       <div className="logo">
@@ -24,7 +50,7 @@ export default function Signup() {
         </svg>
       </div>
 
-      <Forms action="">
+      <Forms onSubmit={handleSignUp}>
         <input
           type="text"
           name=""
