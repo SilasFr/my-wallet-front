@@ -14,6 +14,8 @@ export default function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/nova-saida" />
+          <Route path="/nova-entrada" />
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>

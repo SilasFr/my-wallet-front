@@ -12,17 +12,17 @@ const Container = styled.div`
 
 const MainContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background-color: #8c11be;
   display: flex;
 
-  gap: 9%;
+  gap: 13px;
   flex-direction: column;
   align-items: center;
   .header {
     min-width: 326px;
     max-width: 100%;
-    margin: 25px 24px 9px 24px;
+    margin: 20px 24px 9px 24px;
     padding: 0 5px;
     display: flex;
     justify-content: space-between;
@@ -111,7 +111,7 @@ const Footnote = styled.p`
 
 const Feed = styled.div`
   width: 326px;
-  height: 446px;
+  height: 67%;
   background-color: #fff;
   border-radius: 5px;
   p {

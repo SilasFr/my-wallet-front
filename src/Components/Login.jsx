@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../Contexts/UserContext";
 import { Container, Footnote, Forms } from "../style/style";
+import Swal from "sweetalert2";
 
 export default function Login() {
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -24,7 +25,14 @@ export default function Login() {
       navigate("/main");
     });
     promise.catch((error) => {
-      console.log(error.response);
+      console.log(error.response.status);
+      if (error.response.status === 401) {
+        Swal.fire({
+          title: "Error!",
+          text: "O login ou senha estão incorretos.",
+          icon: "error",
+        });
+      }
     });
   }
 
