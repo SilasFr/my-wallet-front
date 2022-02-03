@@ -1,10 +1,13 @@
 import { MainContainer, Feed } from "../style/style";
+import { useContext } from "react";
+import UserContext from "../Contexts/UserContext";
 
 export default function Main() {
+  const { currentUser } = useContext(UserContext);
   return (
     <MainContainer>
       <div className="header">
-        <h2>Olá, Fulano</h2>
+        <h2>Olá, {currentUser.name}</h2>
         <ion-icon name="log-out-outline"></ion-icon>
       </div>
       <Feed>

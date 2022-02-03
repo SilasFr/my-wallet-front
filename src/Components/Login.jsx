@@ -21,6 +21,7 @@ export default function Login() {
     promise.then((response) => {
       console.log(response.data);
       setCurrentUser(response.data);
+      navigate("/main");
     });
     promise.catch((error) => {
       console.log(error.response);
