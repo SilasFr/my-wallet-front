@@ -27,9 +27,7 @@ const MainContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    h2 {
-      color: #fff;
-    }
+    color: #fff;
     ion-icon {
       font-size: 30px;
       color: #fff;

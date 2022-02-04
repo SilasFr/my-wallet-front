@@ -10,14 +10,12 @@ export default function Main() {
   const { token } = useContext(UserContext);
   const [currentUser, setCurrentUser] = useState();
   const [balanceSheet, setBalanceSheet] = useState();
-  console.log(token);
   useEffect(() => {
     const message = {
       headers: { Authorization: `Bearer ${token}` },
     };
     const promise = axios.get("http://localhost:5000/balance-sheet", message);
     promise.then((response) => {
-      console.log(response.data);
       setCurrentUser(response.data.user);
       setBalanceSheet(response.data.balanceSheet);
     });
