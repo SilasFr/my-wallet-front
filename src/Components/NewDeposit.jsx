@@ -18,11 +18,17 @@ export default function NewDeposit() {
     };
     console.log(message);
 
-    const promise = axios.post(
+    const promise = axios.put(
       "http://localhost:5000/balance-sheet/new-registry",
       message,
       { headers: { Authorization: `Bearer ${token}` } }
     );
+    promise.then((response) => {
+      console.log(response.data);
+    });
+    promise.catch((error) => {
+      console.log(error.response);
+    });
   }
   return (
     <MainContainer>
