@@ -6,9 +6,9 @@ import Main from "./Main";
 import Signup from "./Signup";
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState();
+  const [token, setToken] = useState();
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+    <UserContext.Provider value={{ token, setToken }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />} />

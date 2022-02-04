@@ -6,22 +6,20 @@ import { Container, Footnote, Forms } from "../style/style";
 import Swal from "sweetalert2";
 
 export default function Login() {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
-    console.log(currentUser, setCurrentUser);
 
     const promise = axios.post("http://localhost:5000/sign-in", {
       email,
       password,
     });
     promise.then((response) => {
-      console.log(response.data);
-      setCurrentUser(response.data);
+      setToken(response.data);
       navigate("/main");
     });
     promise.catch((error) => {

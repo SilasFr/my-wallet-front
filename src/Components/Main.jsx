@@ -4,28 +4,36 @@ import UserContext from "../Contexts/UserContext";
 import BalanceSheet from "./BalanceSheet";
 import axios from "axios";
 import MainMenu from "./MainMenu";
+import Swal from "sweetalert2";
 
 export default function Main() {
-  const { currentUser } = useContext(UserContext);
+  const { token } = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useState();
   const [balanceSheet, setBalanceSheet] = useState();
+  console.log(token);
   useEffect(() => {
     const message = {
-      headers: {
-        User: {
-          Autorization: `Bearer ${currentUser.token}`,
-        },
-      },
-      body: {},
+      headers: { Authorization: `Bearer ${token}` },
     };
     const promise = axios.get("http://localhost:5000/balance-sheet", message);
     promise.then((response) => {
       console.log(response.data);
-      setBalanceSheet(response.data);
+      setCurrentUser(response.data.user);
+      setBalanceSheet(response.data.balanceSheet);
     });
     promise.catch((error) => {
       console.log(error.response);
+      Swal.fire({
+        title: "Error!",
+        text: error.response.data,
+        icon: "error",
+      });
     });
   }, []);
+
+  if (!currentUser) {
+    return <h1>Carregando</h1>;
+  }
   return (
     <MainContainer>
       <div className="header">
