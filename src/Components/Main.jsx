@@ -3,12 +3,21 @@ import { useContext, useEffect, useState } from "react";
 import UserContext from "../Contexts/UserContext";
 import BalanceSheet from "./BalanceSheet";
 import axios from "axios";
+import MainMenu from "./MainMenu";
 
 export default function Main() {
   const { currentUser } = useContext(UserContext);
   const [balanceSheet, setBalanceSheet] = useState();
   useEffect(() => {
-    const promise = axios.get("http://localhost:5000/balance-sheet");
+    const message = {
+      headers: {
+        User: {
+          Autorization: `Bearer ${currentUser.token}`,
+        },
+      },
+      body: {},
+    };
+    const promise = axios.get("http://localhost:5000/balance-sheet", message);
     promise.then((response) => {
       console.log(response.data);
       setBalanceSheet(response.data);
@@ -31,16 +40,7 @@ export default function Main() {
         )}
       </Feed>
 
-      <div className="menu">
-        <button>
-          <ion-icon name="add-circle-outline"></ion-icon>
-          <p>Nova entrada</p>
-        </button>
-        <button>
-          <ion-icon name="remove-circle-outline"></ion-icon>
-          <p>Nova saída</p>
-        </button>
-      </div>
+      <MainMenu />
     </MainContainer>
   );
 }
