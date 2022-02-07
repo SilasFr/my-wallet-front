@@ -1,33 +1,37 @@
 import axios from "axios";
 import { useContext, useState } from "react";
-import UserContext from "../Contexts/UserContext";
+import { useNavigate } from "react-router-dom";
+import { ScreenContext, UserContext } from "../Contexts/UserContext";
 import { Forms, MainContainer } from "../style/style";
 
 export default function NewWithdrawal() {
   const { token } = useContext(UserContext);
+  const { setScreen } = useContext(ScreenContext);
+
   const [newWithdrawal, setNewWithdrawal] = useState("");
   const [withdrawalDescription, setWithdrawalDescription] = useState("");
   const character = "withdrawal";
+  const navigate = useNavigate();
 
   function handleNewDeposit(e) {
     e.preventDefault();
     const message = {
       character,
-      newWithdrawal,
-      withdrawalDescription,
+      value: newWithdrawal,
+      description: withdrawalDescription,
     };
-    console.log(message);
     const promise = axios.put(
       "http://localhost:5000/balance-sheet/new-registry",
       message,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     promise.then((response) => {
-      console.log(response.data);
+      setScreen(response.data);
     });
     promise.catch((error) => {
-      console.log(error.response);
+      alert(error.response);
     });
+    navigate("/main");
   }
   return (
     <MainContainer>

@@ -112,13 +112,13 @@ const Feed = styled.div`
   height: 67%;
   background-color: #fff;
   border-radius: 5px;
-  p {
+  p.empty {
     height: 100%;
     padding: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
 
     font-size: 20px;
     line-height: 23px;
@@ -127,4 +127,55 @@ const Feed = styled.div`
   }
 `;
 
-export { MainContainer, Container, Forms, Footnote, Feed };
+const Extract = styled.div`
+  margin-top: 13px;
+  padding: 11px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  position: relative;
+  .registry {
+    display: flex;
+    justify-content: space-between;
+
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    .date-description {
+      display: flex;
+      gap: 8px;
+    }
+    p {
+      color: #000;
+    }
+    span {
+      color: #c6c6c6;
+    }
+    .deposit {
+      p {
+        color: #03ac00;
+      }
+    }
+    .withdrawal {
+      p {
+        color: #c70000;
+      }
+    }
+  }
+  .extract {
+    width: 93%;
+    display: flex;
+    justify-content: space-between;
+
+    position: absolute;
+    bottom: 20px;
+    p {
+      font-weight: bold;
+    }
+  }
+`;
+
+export { MainContainer, Container, Forms, Footnote, Feed, Extract };

@@ -25,12 +25,11 @@ export default function Signup() {
       password,
     });
     promise.then((response) => {
-      console.log(response.data);
       alert(response.data);
       navigate("/");
     });
     promise.catch((error) => {
-      console.log(error.response);
+      alert(error);
     });
   }
   return (

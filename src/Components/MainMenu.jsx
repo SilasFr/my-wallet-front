@@ -1,13 +1,13 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MainMenu() {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   function handleDeposit() {
-    console.log("Nova entrada");
+    navigate("/nova-entrada");
   }
   function handleWithdrawal() {
-    console.log("Nova saída");
+    navigate("/nova-saida");
   }
 
   return (

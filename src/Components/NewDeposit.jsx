@@ -1,22 +1,24 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import UserContext from "../Contexts/UserContext";
+import { ScreenContext, UserContext } from "../Contexts/UserContext";
 import { Forms, MainContainer } from "../style/style";
 
 export default function NewDeposit() {
   const { token } = useContext(UserContext);
+  const { setScreen } = useContext(ScreenContext);
   const [newDeposit, setNewDeposit] = useState("");
   const [depositDescription, setDepositDescription] = useState("");
   const character = "deposit";
+  const navigate = useNavigate();
 
   function handleNewDeposit(e) {
     e.preventDefault();
     const message = {
       character,
-      newDeposit,
-      depositDescription,
+      value: newDeposit,
+      description: depositDescription,
     };
-    console.log(message);
 
     const promise = axios.put(
       "http://localhost:5000/balance-sheet/new-registry",
@@ -24,11 +26,12 @@ export default function NewDeposit() {
       { headers: { Authorization: `Bearer ${token}` } }
     );
     promise.then((response) => {
-      console.log(response.data);
+      setScreen(response.data);
     });
     promise.catch((error) => {
-      console.log(error.response);
+      alert(error.response);
     });
+    navigate("/main");
   }
   return (
     <MainContainer>
