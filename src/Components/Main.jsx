@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 
 export default function Main() {
   const { token } = useContext(UserContext);
-  const { screen, setScreen } = useContext(ScreenContext);
+  const { screen } = useContext(ScreenContext);
   const [currentUser, setCurrentUser] = useState();
   const [registry, setRegistry] = useState();
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Main() {
         icon: "error",
       });
     });
-  }, [screen]);
+  }, [screen, token]);
 
   if (!currentUser && !registry) {
     return <h1>Carregando</h1>;
