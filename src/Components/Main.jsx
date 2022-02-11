@@ -18,7 +18,10 @@ export default function Main() {
     const message = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    const promise = axios.get("http://localhost:5000/balance-sheet", message);
+    const promise = axios.get(
+      "https://my-wallet-back-silas.herokuapp.com/balance-sheet",
+      message
+    );
     promise.then((response) => {
       setCurrentUser(response.data.user);
       setRegistry(response.data.balanceSheet);

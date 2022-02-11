@@ -14,10 +14,13 @@ export default function Login() {
   function handleLogin(e) {
     e.preventDefault();
 
-    const promise = axios.post("http://localhost:5000/sign-in", {
-      email,
-      password,
-    });
+    const promise = axios.post(
+      "https://my-wallet-back-silas.herokuapp.com/sign-in",
+      {
+        email,
+        password,
+      }
+    );
     promise.then((response) => {
       setToken(response.data);
       navigate("/main");

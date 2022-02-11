@@ -21,7 +21,7 @@ export default function NewWithdrawal() {
       description: withdrawalDescription,
     };
     const promise = axios.put(
-      "http://localhost:5000/balance-sheet/new-registry",
+      "https://my-wallet-back-silas.herokuapp.com/balance-sheet/new-registry",
       message,
       { headers: { Authorization: `Bearer ${token}` } }
     );

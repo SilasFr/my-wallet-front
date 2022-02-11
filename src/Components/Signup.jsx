@@ -19,11 +19,14 @@ export default function Signup() {
       return;
     }
 
-    const promise = axios.post("http://localhost:5000/sign-up", {
-      name,
-      email,
-      password,
-    });
+    const promise = axios.post(
+      "https://my-wallet-back-silas.herokuapp.com/sign-up",
+      {
+        name,
+        email,
+        password,
+      }
+    );
     promise.then((response) => {
       alert(response.data);
       navigate("/");
