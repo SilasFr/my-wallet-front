@@ -1,11 +1,11 @@
-import { MainContainer, Feed } from "../style/style";
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ScreenContext, UserContext } from "../Contexts/UserContext";
-import BalanceSheet from "./BalanceSheet";
-import axios from "axios";
-import MainMenu from "./MainMenu";
-import Swal from "sweetalert2";
+import { MainContainer, Feed } from '../style/style';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ScreenContext, UserContext } from '../Contexts/UserContext';
+import BalanceSheet from './BalanceSheet';
+import MainMenu from './MainMenu';
+import Swal from 'sweetalert2';
+import baseAPI from '../services/api';
 
 export default function Main() {
   const { token } = useContext(UserContext);
@@ -18,19 +18,16 @@ export default function Main() {
     const message = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    const promise = axios.get(
-      "https://my-wallet-back-silas.herokuapp.com/balance-sheet",
-      message
-    );
+    const promise = baseAPI.get('/balance-sheet', message);
     promise.then((response) => {
       setCurrentUser(response.data.user);
       setRegistry(response.data.balanceSheet);
     });
     promise.catch((error) => {
       Swal.fire({
-        title: "Error!",
+        title: 'Error!',
         text: error.response.data,
-        icon: "error",
+        icon: 'error',
       });
     });
   }, [screen, token]);
@@ -38,6 +35,7 @@ export default function Main() {
   if (!currentUser && !registry) {
     return <h1>Carregando</h1>;
   }
+  console.log(registry);
   return (
     <MainContainer>
       <div className="header">
@@ -45,7 +43,7 @@ export default function Main() {
         <ion-icon
           name="log-out-outline"
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
         ></ion-icon>
       </div>

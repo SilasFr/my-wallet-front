@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;
@@ -90,6 +90,10 @@ const Forms = styled.form`
     border-radius: 5px;
     border: none;
     color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     p {
       font-weight: bold;
       font-size: 20px;

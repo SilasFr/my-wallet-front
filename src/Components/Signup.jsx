@@ -1,37 +1,40 @@
-import axios from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Container, Footnote, Forms } from "../style/style";
+import { useState } from 'react';
+import { MutatingDots } from 'react-loader-spinner';
+import { Link, useNavigate } from 'react-router-dom';
+import baseAPI from '../services/api';
+import { Container, Footnote, Forms } from '../style/style';
 
 export default function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [pwConfirmation, setPwConfirmation] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [pwConfirmation, setPwConfirmation] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleSignUp(e) {
     e.preventDefault();
+    setIsLoading(true);
     if (pwConfirmation !== password) {
-      alert("As senhas não são compatíveis!");
-      setPassword("");
-      setPwConfirmation("");
+      alert('As senhas não são compatíveis!');
+      setPassword('');
+      setPwConfirmation('');
       return;
     }
 
-    const promise = axios.post(
-      "https://my-wallet-back-silas.herokuapp.com/sign-up",
-      {
-        name,
-        email,
-        password,
-      }
-    );
+    const promise = baseAPI.post('/sign-up', {
+      name,
+      email,
+      password,
+    });
     promise.then((response) => {
       alert(response.data);
-      navigate("/");
+      setIsLoading(false);
+
+      navigate('/');
     });
     promise.catch((error) => {
+      setIsLoading(false);
       alert(error);
     });
   }
@@ -93,8 +96,17 @@ export default function Signup() {
             setPwConfirmation(e.target.value);
           }}
         />
-        <button type="submit">
-          <p>Cadastrar</p>
+        <button disabled={isLoading} type="submit">
+          {isLoading ? (
+            <MutatingDots
+              height={90}
+              width={90}
+              color="#fff"
+              secondaryColor="#a7ecf8"
+            />
+          ) : (
+            <p>Cadastrar</p>
+          )}
         </button>
       </Forms>
 

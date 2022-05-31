@@ -1,36 +1,39 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { UserContext } from "../Contexts/UserContext";
-import { Container, Footnote, Forms } from "../style/style";
-import Swal from "sweetalert2";
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../Contexts/UserContext';
+import { Container, Footnote, Forms } from '../style/style';
+import Swal from 'sweetalert2';
+import { MutatingDots } from 'react-loader-spinner';
+import baseAPI from '../services/api';
 
 export default function Login() {
   const { setToken } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleLogin(e) {
     e.preventDefault();
+    setIsLoading(true);
 
-    const promise = axios.post(
-      "https://my-wallet-back-silas.herokuapp.com/sign-in",
-      {
-        email,
-        password,
-      }
-    );
+    const promise = baseAPI.post('/sign-in', {
+      email,
+      password,
+    });
     promise.then((response) => {
       setToken(response.data);
-      navigate("/main");
+      setIsLoading(false);
+
+      navigate('/main');
     });
     promise.catch((error) => {
+      setIsLoading(false);
       if (error.response.status === 401) {
-        Swal.fire({
-          title: "Error!",
-          text: "O login ou senha estão incorretos.",
-          icon: "error",
+        return Swal.fire({
+          title: 'Error!',
+          text: 'O login ou senha estão incorretos.',
+          icon: 'error',
         });
       }
     });
@@ -68,8 +71,18 @@ export default function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">
-          <p>Entrar</p>
+        <button disabled={isLoading} type="submit">
+          {isLoading ? (
+            <MutatingDots
+              height={90}
+              width={90}
+              color="#a7ecf8"
+              secondaryColor="#fff"
+              ariaLabel="loading-indicator"
+            />
+          ) : (
+            <p>Entrar</p>
+          )}
         </button>
       </Forms>
 

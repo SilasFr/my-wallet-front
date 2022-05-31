@@ -1,16 +1,16 @@
-import axios from "axios";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { ScreenContext, UserContext } from "../Contexts/UserContext";
-import { Forms, MainContainer } from "../style/style";
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ScreenContext, UserContext } from '../Contexts/UserContext';
+import baseAPI from '../services/api';
+import { Forms, MainContainer } from '../style/style';
 
 export default function NewWithdrawal() {
   const { token } = useContext(UserContext);
   const { setScreen } = useContext(ScreenContext);
 
-  const [newWithdrawal, setNewWithdrawal] = useState("");
-  const [withdrawalDescription, setWithdrawalDescription] = useState("");
-  const character = "withdrawal";
+  const [newWithdrawal, setNewWithdrawal] = useState('');
+  const [withdrawalDescription, setWithdrawalDescription] = useState('');
+  const character = 'withdrawal';
   const navigate = useNavigate();
 
   function handleNewDeposit(e) {
@@ -20,18 +20,16 @@ export default function NewWithdrawal() {
       value: newWithdrawal,
       description: withdrawalDescription,
     };
-    const promise = axios.put(
-      "https://my-wallet-back-silas.herokuapp.com/balance-sheet/new-registry",
-      message,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const promise = baseAPI.put('/balance-sheet/new-registry', message, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     promise.then((response) => {
       setScreen(response.data);
     });
     promise.catch((error) => {
       alert(error.response);
     });
-    navigate("/main");
+    navigate('/main');
   }
   return (
     <MainContainer>
