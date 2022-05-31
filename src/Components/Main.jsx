@@ -6,6 +6,8 @@ import BalanceSheet from './BalanceSheet';
 import MainMenu from './MainMenu';
 import Swal from 'sweetalert2';
 import baseAPI from '../services/api';
+import Loading from './LoadingWarning';
+import AlertDialog from './AlertDialog';
 
 export default function Main() {
   const { token } = useContext(UserContext);
@@ -13,6 +15,15 @@ export default function Main() {
   const [currentUser, setCurrentUser] = useState();
   const [registry, setRegistry] = useState();
   const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
+
+  function handleOpenDialog() {
+    setOpenDialog(true);
+  }
+
+  function handleCloseDialog() {
+    setOpenDialog(false);
+  }
 
   useEffect(() => {
     const message = {
@@ -24,18 +35,36 @@ export default function Main() {
       setRegistry(response.data.balanceSheet);
     });
     promise.catch((error) => {
-      Swal.fire({
-        title: 'Error!',
-        text: error.response.data,
-        icon: 'error',
-      });
+      if (error.response.status === 401) {
+        console.log('entrou');
+        handleOpenDialog();
+      } else {
+        console.log(error.response);
+        Swal.fire({
+          title: 'Error!',
+          text: error.response.data,
+          icon: 'error',
+        });
+      }
     });
   }, [screen, token]);
 
   if (!currentUser && !registry) {
-    return <h1>Carregando</h1>;
+    return (
+      <>
+        <Loading />;
+        <AlertDialog
+          open={openDialog}
+          handleClose={handleCloseDialog}
+          alertText={'Erro! Não autorizado. Volte para a tela de login'}
+          option1={'ok'}
+          option1Action={() => navigate('/')}
+          // option2Action={handleCloseDialog}
+        />
+      </>
+    );
   }
-  console.log(registry);
+
   return (
     <MainContainer>
       <div className="header">
@@ -55,6 +84,15 @@ export default function Main() {
         )}
       </Feed>
       <MainMenu />
+      <AlertDialog
+        open={openDialog}
+        handleClose={handleCloseDialog}
+        alertText={'Deseja voltar sem salvar alterações?'}
+        option1={'Sim'}
+        option2={'Não'}
+        option1Action={() => navigate(-1)}
+        option2Action={handleCloseDialog}
+      />
     </MainContainer>
   );
 }
