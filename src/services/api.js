@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const PORT = 5000;
-
-const baseAPI = axios.create({ baseURL: `http://localhost:${PORT}` });
+const baseAPI = axios.create({
+  baseURL: `https://my-wallet-back-silas.herokuapp.com`,
+});
 
 export default baseAPI;
